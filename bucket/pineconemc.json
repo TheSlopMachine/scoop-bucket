@@ -21,8 +21,14 @@
     ],
     "shortcuts": [
         [
-            "prismlauncher.exe",
+            "elyprismlauncher.exe",
             "PineconeMC"
+        ]
+    ],
+    "bin": [
+        [
+            "elyprismlauncher.exe",
+            "pineconemc"
         ]
     ],
     "persist": [
