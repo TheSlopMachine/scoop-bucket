@@ -6,13 +6,13 @@ Automatically updated [Scoop](https://scoop.sh) bucket.
 
 ```powershell
 scoop bucket add slop https://github.com/TheSlopMachine/scoop-bucket
-scoop install slop/pineconemc
 ```
 
 ## Apps
 
 | App | Description | Upstream |
 |---|---|---|
+| `imageviewer` | Simple, cross-platform Qt image viewer inspired by GPicView | [AlienCowEatCake/ImageViewer](https://github.com/AlienCowEatCake/ImageViewer) |
 | `pineconemc` | Prism Launcher fork with Ely.by support | [ElyPrismLauncher/Launcher](https://github.com/ElyPrismLauncher/Launcher) |
 
 ## How updates work

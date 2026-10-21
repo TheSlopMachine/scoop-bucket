@@ -1,0 +1,47 @@
+{
+    "version": "1.9.2",
+    "description": "Simple, cross-platform Qt-based image viewer inspired by GPicView. Supports RAW, HEIF/AVIF, JPEG XL, EXR and many other formats",
+    "homepage": "https://github.com/AlienCowEatCake/ImageViewer",
+    "license": "GPL-3.0-or-later",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/AlienCowEatCake/ImageViewer/releases/download/v1.9.2/ImageViewer_qt6_msvc2026_x64.zip",
+            "hash": "7e1faa9aea94ebb76030531def578999cb97b93899bcbf8940728e0c0fe44729",
+            "extract_dir": "ImageViewer_qt6_msvc2026_x64"
+        },
+        "arm64": {
+            "url": "https://github.com/AlienCowEatCake/ImageViewer/releases/download/v1.9.2/ImageViewer_qt6_msvc2026_arm64.zip",
+            "hash": "de71d5c0d48d40799df280505e14e455d4dca944965c3297ce7a7d2c1c8cf2c8",
+            "extract_dir": "ImageViewer_qt6_msvc2026_arm64"
+        },
+        "32bit": {
+            "url": "https://github.com/AlienCowEatCake/ImageViewer/releases/download/v1.9.2/ImageViewer_qt5.15_msvc2022_x86.zip",
+            "hash": "b64957e1e9aa269a5bc10f5ed3dc19e3ab8ef0b1459419fce873148029a03693",
+            "extract_dir": "ImageViewer_qt5.15_msvc2022_x86"
+        }
+    },
+    "bin": "ImageViewer.exe",
+    "shortcuts": [
+        [
+            "ImageViewer.exe",
+            "ImageViewer"
+        ]
+    ],
+    "checkver": "github",
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/AlienCowEatCake/ImageViewer/releases/download/v$version/ImageViewer_qt6_msvc2026_x64.zip",
+                "extract_dir": "ImageViewer_qt6_msvc2026_x64"
+            },
+            "arm64": {
+                "url": "https://github.com/AlienCowEatCake/ImageViewer/releases/download/v$version/ImageViewer_qt6_msvc2026_arm64.zip",
+                "extract_dir": "ImageViewer_qt6_msvc2026_arm64"
+            },
+            "32bit": {
+                "url": "https://github.com/AlienCowEatCake/ImageViewer/releases/download/v$version/ImageViewer_qt5.15_msvc2022_x86.zip",
+                "extract_dir": "ImageViewer_qt5.15_msvc2022_x86"
+            }
+        }
+    }
+}
