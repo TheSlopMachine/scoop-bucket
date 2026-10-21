@@ -1,0 +1,13 @@
+{
+    "version": "0.0.0",
+    "description": "__DESCRIPTION__",
+    "homepage": "https://github.com/__OWNER__/__REPO__",
+    "license": "__SPDX_LICENSE__",
+    "url": "https://github.com/__OWNER__/__REPO__/releases/download/0.0.0/__ASSET_NAME__",
+    "hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "bin": "__EXE__",
+    "checkver": "github",
+    "autoupdate": {
+        "url": "https://github.com/__OWNER__/__REPO__/releases/download/v$version/__ASSET_NAME_WITH_$version__"
+    }
+}

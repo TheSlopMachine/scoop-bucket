@@ -1,0 +1,48 @@
+name: Excavator
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'   # every 6 hours
+
+permissions:
+  contents: write
+
+concurrency:
+  group: excavator
+  cancel-in-progress: false
+
+jobs:
+  excavate:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for new versions and update manifests
+        shell: pwsh
+        env:
+          SCOOP_CHECKVER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $env:PATH = "$HOME\scoop\shims;$env:PATH"
+          if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
+            Invoke-Expression "& {$(Invoke-RestMethod get.scoop.sh)} -RunAsAdmin"
+          }
+          $scoopHome = scoop prefix scoop
+          # Checks every manifest in bucket/, rewrites version/url/hash where a newer release exists
+          & "$scoopHome\bin\checkver.ps1" -Dir "$PWD\bucket" -Update -SkipUpdated
+
+      - name: Commit changes
+        shell: pwsh
+        run: |
+          git add bucket
+          if (git status --porcelain -- bucket) {
+            $apps = (git diff --cached --name-only -- bucket |
+              ForEach-Object { [IO.Path]::GetFileNameWithoutExtension($_) }) -join ', '
+            git config user.name  "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "chore: update $apps"
+            git push
+          } else {
+            Write-Host "Everything is up to date."
+          }

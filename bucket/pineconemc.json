@@ -1,0 +1,50 @@
+{
+    "version": "0.0.0",
+    "description": "PineconeMC (formerly ElyPrismLauncher): a Prism Launcher fork with integrated Ely.by account support",
+    "homepage": "https://pineconemc.ru",
+    "license": "GPL-3.0-only",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/ElyPrismLauncher/Launcher/releases/download/0.0.0/PineconeMC-Windows-MSVC-Portable-0.0.0.zip",
+            "hash": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "arm64": {
+            "url": "https://github.com/ElyPrismLauncher/Launcher/releases/download/0.0.0/PineconeMC-Windows-MSVC-arm64-Portable-0.0.0.zip",
+            "hash": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+    },
+    "pre_install": [
+        "# Portable build keeps its data next to the exe; make sure the single-file data exists so Scoop can persist it",
+        "foreach ($f in 'accounts.json', 'prismlauncher.cfg') {",
+        "    if (!(Test-Path \"$persist_dir\\$f\")) { New-Item \"$dir\\$f\" -ItemType File | Out-Null }",
+        "}"
+    ],
+    "shortcuts": [
+        [
+            "prismlauncher.exe",
+            "PineconeMC"
+        ]
+    ],
+    "persist": [
+        "instances",
+        "icons",
+        "java",
+        "meta",
+        "themes",
+        "accounts.json",
+        "prismlauncher.cfg"
+    ],
+    "checkver": {
+        "github": "https://github.com/ElyPrismLauncher/Launcher"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/ElyPrismLauncher/Launcher/releases/download/$version/PineconeMC-Windows-MSVC-Portable-$version.zip"
+            },
+            "arm64": {
+                "url": "https://github.com/ElyPrismLauncher/Launcher/releases/download/$version/PineconeMC-Windows-MSVC-arm64-Portable-$version.zip"
+            }
+        }
+    }
+}

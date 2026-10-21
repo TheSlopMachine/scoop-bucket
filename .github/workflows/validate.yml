@@ -1,0 +1,36 @@
+name: Validate
+
+on:
+  pull_request:
+    paths: ['bucket/**']
+  push:
+    paths: ['bucket/**']
+
+jobs:
+  validate:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Lint manifests
+        shell: pwsh
+        run: |
+          $failed = $false
+          foreach ($f in Get-ChildItem bucket -Filter *.json) {
+            try { $m = Get-Content $f.FullName -Raw | ConvertFrom-Json }
+            catch { Write-Host "::error file=$($f.FullName)::Invalid JSON: $_"; $failed = $true; continue }
+
+            foreach ($k in 'version', 'description', 'homepage', 'license') {
+              if (-not $m.$k) { Write-Host "::error file=$($f.FullName)::Missing '$k'"; $failed = $true }
+            }
+            if (-not ($m.url -or $m.architecture)) {
+              Write-Host "::error file=$($f.FullName)::Needs 'url' or 'architecture'"; $failed = $true
+            }
+            if (-not $m.checkver) {
+              Write-Host "::warning file=$($f.FullName)::No 'checkver' - this app will not auto-update"
+            }
+            if ($m.checkver -and -not $m.autoupdate) {
+              Write-Host "::warning file=$($f.FullName)::'checkver' without 'autoupdate'"
+            }
+          }
+          if ($failed) { exit 1 }
