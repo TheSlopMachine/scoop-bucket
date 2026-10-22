@@ -1,0 +1,39 @@
+{
+    "version": "1.6.2",
+    "description": "Minimal CLI AI agent for the terminal, works with any OpenAI-compatible API",
+    "homepage": "https://github.com/duckyouryan/clank",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/duckyouryan/clank/releases/download/v1.6.2/clank-v1.6.2-windows-amd64.zip",
+            "hash": "c03c3cd3d98c8c8333514bc50b180a3141fd1a3e9ef3054244be50dea18ec986"
+        },
+        "32bit": {
+            "url": "https://github.com/duckyouryan/clank/releases/download/v1.6.2/clank-v1.6.2-windows-386.zip",
+            "hash": "1f5b05398746f6adc0ad25572b66fb98a36e76ca246cd8bf12b01c762de43a33"
+        },
+        "arm64": {
+            "url": "https://github.com/duckyouryan/clank/releases/download/v1.6.2/clank-v1.6.2-windows-arm64.zip",
+            "hash": "d42a0217ad2740aecd311eb7477d26fe01d00708e610a1d65831554da173d13e"
+        }
+    },
+    "pre_install": [
+        "# GoReleaser zips carry a versioned exe name (clank-v<version>-windows-<arch>.exe); normalize it so bin survives updates",
+        "Rename-Item (Get-Item \"$dir\\clank-*.exe\").FullName 'clank.exe'"
+    ],
+    "bin": "clank.exe",
+    "checkver": "github",
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/duckyouryan/clank/releases/download/v$version/clank-v$version-windows-amd64.zip"
+            },
+            "32bit": {
+                "url": "https://github.com/duckyouryan/clank/releases/download/v$version/clank-v$version-windows-386.zip"
+            },
+            "arm64": {
+                "url": "https://github.com/duckyouryan/clank/releases/download/v$version/clank-v$version-windows-arm64.zip"
+            }
+        }
+    }
+}
