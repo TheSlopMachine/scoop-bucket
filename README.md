@@ -13,6 +13,7 @@ scoop bucket add slop https://github.com/TheSlopMachine/scoop-bucket
 | App | Description | Upstream |
 |---|---|---|
 | `imageviewer` | Simple, cross-platform Qt image viewer inspired by GPicView | [AlienCowEatCake/ImageViewer](https://github.com/AlienCowEatCake/ImageViewer) |
+| `llm-router` | Zero-bloat, self-contained OpenAI-compatible LLM routing gateway | [TheSlopMachine/llm-router](https://github.com/TheSlopMachine/llm-router) |
 | `pineconemc` | Prism Launcher fork with Ely.by support | [ElyPrismLauncher/Launcher](https://github.com/ElyPrismLauncher/Launcher) |
 
 ## How updates work
