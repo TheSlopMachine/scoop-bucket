@@ -1,0 +1,19 @@
+{
+    "version": "1.31",
+    "description": "Freely-redistributable re-implementation of SysInternals/Microsoft's PsExec for launching programs on remote Windows systems",
+    "homepage": "https://www.poweradmin.com/paexec/",
+    "license": {
+        "identifier": "Freeware",
+        "url": "https://www.poweradmin.com/paexec/PAExec_EULA.txt"
+    },
+    "url": "https://www.poweradmin.com/paexec/paexec_1_31.exe#/paexec.exe",
+    "hash": "9c2a20b67ede0cc57eb3e3708ead52d98ad6065d5a539319d771846acfac6a75",
+    "bin": "paexec.exe",
+    "checkver": {
+        "url": "https://www.poweradmin.com/paexec/",
+        "regex": "Download PAExec v([\\d.]+)"
+    },
+    "autoupdate": {
+        "url": "https://www.poweradmin.com/paexec/paexec_$underscoreVersion.exe#/paexec.exe"
+    }
+}
