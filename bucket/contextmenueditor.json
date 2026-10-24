@@ -1,0 +1,52 @@
+{
+    "version": "1.0.0",
+    "description": "Native Windows tool for browsing, editing and backing up Explorer's right-click menu entries",
+    "homepage": "https://github.com/TheSlopMachine/ContextMenuEditor",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/TheSlopMachine/ContextMenuEditor/releases/download/v1.0.0/ContextMenuEditor-1.0.0-win64.zip",
+            "hash": "b8476426d69670a0bedc167e4d9c60e7b4b70a21bf854dc9353a00d349b11f97",
+            "extract_dir": "ContextMenuEditor-1.0.0-win64"
+        },
+        "32bit": {
+            "url": "https://github.com/TheSlopMachine/ContextMenuEditor/releases/download/v1.0.0/ContextMenuEditor-1.0.0-win32.zip",
+            "hash": "b81e47a1bc80b28ee5e7a67ff845596a9e8bd33d46d0617d96ad131b8dc9f105",
+            "extract_dir": "ContextMenuEditor-1.0.0-win32"
+        },
+        "arm64": {
+            "url": "https://github.com/TheSlopMachine/ContextMenuEditor/releases/download/v1.0.0/ContextMenuEditor-1.0.0-arm64.zip",
+            "hash": "138c2dc807c85a6e07f83b9c5ec68323f7b01e9e81335dcaeb84b10b1f24b701",
+            "extract_dir": "ContextMenuEditor-1.0.0-arm64"
+        }
+    },
+    "bin": [
+        [
+            "ContextMenuEditor.exe",
+            "contextmenueditor"
+        ]
+    ],
+    "shortcuts": [
+        [
+            "ContextMenuEditor.exe",
+            "ContextMenuEditor"
+        ]
+    ],
+    "checkver": "github",
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/TheSlopMachine/ContextMenuEditor/releases/download/v$version/ContextMenuEditor-$version-win64.zip",
+                "extract_dir": "ContextMenuEditor-$version-win64"
+            },
+            "32bit": {
+                "url": "https://github.com/TheSlopMachine/ContextMenuEditor/releases/download/v$version/ContextMenuEditor-$version-win32.zip",
+                "extract_dir": "ContextMenuEditor-$version-win32"
+            },
+            "arm64": {
+                "url": "https://github.com/TheSlopMachine/ContextMenuEditor/releases/download/v$version/ContextMenuEditor-$version-arm64.zip",
+                "extract_dir": "ContextMenuEditor-$version-arm64"
+            }
+        }
+    }
+}
