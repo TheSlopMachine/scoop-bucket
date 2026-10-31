@@ -22,12 +22,14 @@ if (-not $preferences['profile'].ContainsKey('default_content_setting_values')) 
 $preferences['profile']['default_content_setting_values']['notifications'] = 2
 if (-not $preferences.ContainsKey('signin')) { $preferences['signin'] = @{} }
 $preferences['signin']['allowed'] = $false
-$preferences['omnibox_everywhere.show_ai_mode'] = $false
-$preferences['omnibox_everywhere.fre_dismissed'] = $true
-$preferences['omnibox_everywhere.fre_intro_dismissed'] = $true
-$preferences['omnibox_everywhere.fre_shortcut_setup_dismissed'] = $true
-$preferences['omnibox_everywhere.fre_shortcut_reminder_dismissed'] = $true
-$preferences['omnibox_everywhere.screenshot_disclosure_accepted'] = $true
+if (-not $preferences.ContainsKey('omnibox_everywhere')) { $preferences['omnibox_everywhere'] = @{} }
+$preferences['omnibox_everywhere']['show_ai_mode'] = $false
+$preferences['omnibox_everywhere']['fre_dismissed'] = $true
+$preferences['omnibox_everywhere']['fre_intro_dismissed'] = $true
+$preferences['omnibox_everywhere']['fre_shortcut_setup_dismissed'] = $true
+$preferences['omnibox_everywhere']['fre_shortcut_reminder_dismissed'] = $true
+$preferences['omnibox_everywhere']['screenshot_disclosure_accepted'] = $true
+foreach ($key in 'omnibox_everywhere.show_ai_mode','omnibox_everywhere.fre_dismissed','omnibox_everywhere.fre_intro_dismissed','omnibox_everywhere.fre_shortcut_setup_dismissed','omnibox_everywhere.fre_shortcut_reminder_dismissed','omnibox_everywhere.screenshot_disclosure_accepted') { $preferences.Remove($key) }
 
 if ($Vivaldi) {
     if (-not $preferences.ContainsKey('vivaldi')) { $preferences['vivaldi'] = @{} }
@@ -64,11 +66,13 @@ if (Test-Path -LiteralPath $localStatePath -PathType Leaf) {
 } else {
     $localState = @{}
 }
-$localState['omnibox_everywhere.enabled'] = $false
-$localState['omnibox_everywhere.hotkey_enabled'] = $false
-$localState['omnibox_everywhere.hotkey'] = ''
-$localState['omnibox_everywhere.background_mode'] = $false
-$localState['omnibox_everywhere.launch_on_startup'] = $false
+if (-not $localState.ContainsKey('omnibox_everywhere')) { $localState['omnibox_everywhere'] = @{} }
+$localState['omnibox_everywhere']['enabled'] = $false
+$localState['omnibox_everywhere']['hotkey_enabled'] = $false
+$localState['omnibox_everywhere']['hotkey'] = ''
+$localState['omnibox_everywhere']['background_mode'] = $false
+$localState['omnibox_everywhere']['launch_on_startup'] = $false
+foreach ($key in 'omnibox_everywhere.enabled','omnibox_everywhere.hotkey_enabled','omnibox_everywhere.hotkey','omnibox_everywhere.background_mode','omnibox_everywhere.launch_on_startup') { $localState.Remove($key) }
 
 if ($Brave) {
     if (-not $localState.ContainsKey('brave')) { $localState['brave'] = @{} }
