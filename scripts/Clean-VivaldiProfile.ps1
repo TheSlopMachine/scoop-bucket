@@ -36,6 +36,13 @@ if (Test-Path -LiteralPath $DefaultBookmarksPath -PathType Leaf) {
         }
     }
     foreach ($root in $defaultBookmarks.children) { $partnerNames += @(Get-VivaldiPartnerNames $root) }
+
+    $partnerCatalogPath = Join-Path (Split-Path -Parent $DefaultBookmarksPath) 'partners.json'
+    if (Test-Path -LiteralPath $partnerCatalogPath -PathType Leaf) {
+        $partnerCatalog = Get-Content -LiteralPath $partnerCatalogPath -Raw | ConvertFrom-Json
+        $partnerNames += @($partnerCatalog.bookmarks | ForEach-Object { $_.name })
+        $partnerNames += @($partnerCatalog.folders | ForEach-Object { $_.name })
+    }
 }
 
 $deletedPartners = @($preferences['vivaldi']['bookmarks']['deleted_partners'])
