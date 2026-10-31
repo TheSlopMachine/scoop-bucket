@@ -22,6 +22,12 @@ if (-not $preferences['profile'].ContainsKey('default_content_setting_values')) 
 $preferences['profile']['default_content_setting_values']['notifications'] = 2
 if (-not $preferences.ContainsKey('signin')) { $preferences['signin'] = @{} }
 $preferences['signin']['allowed'] = $false
+$preferences['omnibox_everywhere.show_ai_mode'] = $false
+$preferences['omnibox_everywhere.fre_dismissed'] = $true
+$preferences['omnibox_everywhere.fre_intro_dismissed'] = $true
+$preferences['omnibox_everywhere.fre_shortcut_setup_dismissed'] = $true
+$preferences['omnibox_everywhere.fre_shortcut_reminder_dismissed'] = $true
+$preferences['omnibox_everywhere.screenshot_disclosure_accepted'] = $true
 
 if ($Vivaldi) {
     if (-not $preferences.ContainsKey('vivaldi')) { $preferences['vivaldi'] = @{} }
@@ -52,17 +58,23 @@ if ($Brave) {
 
 $preferences | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $preferencesPath -Encoding utf8
 
+$localStatePath = Join-Path $ProfilePath 'Local State'
+if (Test-Path -LiteralPath $localStatePath -PathType Leaf) {
+    $localState = Get-Content -LiteralPath $localStatePath -Raw | ConvertFrom-Json -AsHashtable
+} else {
+    $localState = @{}
+}
+$localState['omnibox_everywhere.enabled'] = $false
+$localState['omnibox_everywhere.hotkey_enabled'] = $false
+$localState['omnibox_everywhere.hotkey'] = ''
+$localState['omnibox_everywhere.background_mode'] = $false
+$localState['omnibox_everywhere.launch_on_startup'] = $false
+
 if ($Brave) {
-    $localStatePath = Join-Path $ProfilePath 'Local State'
-    if (Test-Path -LiteralPath $localStatePath -PathType Leaf) {
-        $localState = Get-Content -LiteralPath $localStatePath -Raw | ConvertFrom-Json -AsHashtable
-    } else {
-        $localState = @{}
-    }
     if (-not $localState.ContainsKey('brave')) { $localState['brave'] = @{} }
     if (-not $localState['brave'].ContainsKey('p3a')) { $localState['brave']['p3a'] = @{} }
     $localState['brave']['p3a']['enabled'] = $false
     if (-not $localState['brave'].ContainsKey('stats')) { $localState['brave']['stats'] = @{} }
     $localState['brave']['stats']['reporting_enabled'] = $false
-    $localState | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $localStatePath -Encoding utf8
 }
+$localState | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $localStatePath -Encoding utf8

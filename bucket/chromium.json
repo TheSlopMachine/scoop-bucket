@@ -20,6 +20,8 @@
         "$target = Get-ChildItem -LiteralPath $dir -Recurse -Filter 'chrome.exe' | Select-Object -First 1",
         "$helper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'New-AppUserModelShortcut.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
         "if ($target -and $helper) { & $helper.FullName -DiscoverAppUserModelId -TargetPath $target.FullName -ShortcutPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Chromium.lnk') -Arguments ('--user-data-dir=\"' + (Join-Path $persist_dir 'profile') + '\" --no-first-run --no-default-browser-check --disable-background-mode --disable-background-networking --disable-component-update --disable-domain-reliability --disable-default-apps --disable-sync') -WorkingDirectory $target.DirectoryName }",
+        "$profileHelper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'Initialize-ChromiumProfile.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
+        "if ($profileHelper) { & $profileHelper.FullName -ProfilePath (Join-Path $persist_dir 'profile') -Enforce }",
         "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Search with Chromium.lnk') -Force -ErrorAction SilentlyContinue"
     ],
     "post_uninstall": "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Chromium.lnk') -Force -ErrorAction SilentlyContinue",
