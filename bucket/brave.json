@@ -10,13 +10,15 @@
         [
             "brave.exe",
             "brave",
-            "--user-data-dir=\"$persist_dir\\profile\" --no-first-run --no-default-browser-check --disable-background-mode --disable-background-networking --disable-component-update --disable-sync"
+            "--user-data-dir=\"$persist_dir\\profile\" --no-first-run --no-default-browser-check --disable-background-mode --disable-background-networking --disable-component-update --disable-domain-reliability --disable-default-apps --disable-sync"
         ]
     ],
     "post_install": [
+        "$profileHelper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'Initialize-ChromiumProfile.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
+        "if ($profileHelper) { & $profileHelper.FullName -ProfilePath (Join-Path $persist_dir 'profile') }",
         "$target = Get-ChildItem -LiteralPath $dir -Recurse -Filter 'brave.exe' | Select-Object -First 1",
         "$helper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'New-AppUserModelShortcut.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
-        "if ($target -and $helper) { & $helper.FullName -DiscoverAppUserModelId -TargetPath $target.FullName -ShortcutPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Brave.lnk') -Arguments ('--user-data-dir=\"' + (Join-Path $persist_dir 'profile') + '\" --no-first-run --no-default-browser-check --disable-background-mode --disable-background-networking --disable-component-update --disable-sync') -WorkingDirectory $target.DirectoryName }"
+        "if ($target -and $helper) { & $helper.FullName -DiscoverAppUserModelId -TargetPath $target.FullName -ShortcutPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Brave.lnk') -Arguments ('--user-data-dir=\"' + (Join-Path $persist_dir 'profile') + '\" --no-first-run --no-default-browser-check --disable-background-mode --disable-background-networking --disable-component-update --disable-domain-reliability --disable-default-apps --disable-sync') -WorkingDirectory $target.DirectoryName }"
     ],
     "post_uninstall": [
         "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Brave.lnk') -Force -ErrorAction SilentlyContinue"
