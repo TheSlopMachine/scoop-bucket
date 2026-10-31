@@ -1,17 +1,20 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory)] [string] $ProfilePath,
-    [switch] $Gx
+    [switch] $Gx,
+    [switch] $Enforce
 )
 
 $preferencesPath = Join-Path $ProfilePath 'Default\Preferences'
+if ((Test-Path -LiteralPath $preferencesPath -PathType Leaf) -and -not $Enforce) { return }
 if (Test-Path -LiteralPath $preferencesPath -PathType Leaf) {
-    return
+    $preferences = Get-Content -LiteralPath $preferencesPath -Raw | ConvertFrom-Json -AsHashtable
+} else {
+    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $preferencesPath) | Out-Null
+    $preferences = @{}
 }
 
-New-Item -ItemType Directory -Force -Path (Split-Path -Parent $preferencesPath) | Out-Null
-
-if ($Gx) {
+if ($Gx -and -not $preferences.ContainsKey('gx')) {
     $preferences = @{
         'continue_on_mixed' = @{ enabled = $false }
         'dropdown' = @{ cities = @{ enabled = $false }; promotedSuggestions = @{ enabled = $false } }
@@ -37,7 +40,7 @@ if ($Gx) {
             'toolbar' = @{ opera_account_button_visible = $false }
         }
     }
-} else {
+} elseif (-not $Gx -and $preferences.Count -eq 0) {
     $preferences = @{
         'continue_on_mixed' = @{ enabled = $false }
         'dropdown' = @{ cities = @{ enabled = $false }; promotedSuggestions = @{ enabled = $false } }
@@ -54,6 +57,22 @@ if ($Gx) {
             'toolbar' = @{ opera_account_button_visible = $false }
         }
     }
+}
+
+if (-not $preferences.ContainsKey('continue_on_mixed')) { $preferences['continue_on_mixed'] = @{} }
+$preferences['continue_on_mixed']['enabled'] = $false
+if (-not $preferences.ContainsKey('privacy_sandbox')) { $preferences['privacy_sandbox'] = @{} }
+$preferences['privacy_sandbox']['first_party_sets_enabled'] = $false
+if (-not $preferences.ContainsKey('profile')) { $preferences['profile'] = @{} }
+if (-not $preferences['profile'].ContainsKey('default_content_setting_values')) { $preferences['profile']['default_content_setting_values'] = @{} }
+$preferences['profile']['default_content_setting_values']['notifications'] = 2
+if (-not $preferences.ContainsKey('signin')) { $preferences['signin'] = @{} }
+$preferences['signin']['allowed'] = $false
+if ($Gx) {
+    if (-not $preferences.ContainsKey('gx')) { $preferences['gx'] = @{} }
+    $preferences['gx']['memory_pressure_tab_snooze'] = $false
+    if (-not $preferences.ContainsKey('startpage')) { $preferences['startpage'] = @{} }
+    $preferences['startpage']['show_news_container'] = $false
 }
 
 $preferences | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $preferencesPath -Encoding utf8
