@@ -24,6 +24,7 @@ $preferences['vivaldi']['dashboard']['widgets'] = @()
 $preferences['vivaldi']['system']['show_exit_confirmation_dialog'] = $false
 
 $partnerNames = @()
+$partnerIds = @()
 if (Test-Path -LiteralPath $DefaultBookmarksPath -PathType Leaf) {
     $defaultBookmarks = Get-Content -LiteralPath $DefaultBookmarksPath -Raw | ConvertFrom-Json
     function Get-VivaldiPartnerNames($node) {
@@ -42,6 +43,8 @@ if (Test-Path -LiteralPath $DefaultBookmarksPath -PathType Leaf) {
         $partnerCatalog = Get-Content -LiteralPath $partnerCatalogPath -Raw | ConvertFrom-Json
         $partnerNames += @($partnerCatalog.bookmarks | ForEach-Object { $_.name })
         $partnerNames += @($partnerCatalog.folders | ForEach-Object { $_.name })
+        $partnerIds += @($partnerCatalog.bookmarks | ForEach-Object { $_.guid; $_.guid2 })
+        $partnerIds += @($partnerCatalog.folders | ForEach-Object { $_.guid })
     }
 }
 
@@ -49,7 +52,10 @@ $deletedPartners = @($preferences['vivaldi']['bookmarks']['deleted_partners'])
 foreach ($partnerName in $partnerNames) {
     if ($deletedPartners -notcontains $partnerName) { $deletedPartners += $partnerName }
 }
-$preferences['vivaldi']['bookmarks']['deleted_partners'] = @($deletedPartners | Select-Object -Unique)
+foreach ($partnerId in $partnerIds) {
+    if ($deletedPartners -notcontains $partnerId) { $deletedPartners += $partnerId }
+}
+$preferences['vivaldi']['bookmarks']['deleted_partners'] = @($deletedPartners | Where-Object { $_ } | Select-Object -Unique)
 $preferences | ConvertTo-Json -Depth 20 | Set-Content -LiteralPath $preferencesPath -Encoding utf8
 
 if (Test-Path -LiteralPath $bookmarksPath -PathType Leaf) {
