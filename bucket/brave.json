@@ -15,7 +15,7 @@
     ],
     "post_install": [
         "$profileHelper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'Initialize-ChromiumProfile.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
-        "if ($profileHelper) { & $profileHelper.FullName -ProfilePath (Join-Path $persist_dir 'profile') }",
+        "if ($profileHelper) { & $profileHelper.FullName -ProfilePath (Join-Path $persist_dir 'profile') -Brave -Enforce }",
         "$target = Get-ChildItem -LiteralPath $dir -Recurse -Filter 'brave.exe' | Select-Object -First 1",
         "$helper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'New-AppUserModelShortcut.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
         "if ($target -and $helper) { & $helper.FullName -DiscoverAppUserModelId -TargetPath $target.FullName -ShortcutPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Brave.lnk') -Arguments ('--user-data-dir=\"' + (Join-Path $persist_dir 'profile') + '\" --no-first-run --no-default-browser-check --disable-background-mode --disable-background-networking --disable-component-update --disable-domain-reliability --disable-default-apps --disable-sync') -WorkingDirectory $target.DirectoryName }"
@@ -29,5 +29,5 @@
     "autoupdate": {
         "url": "https://github.com/brave/brave-browser/releases/download/v$version/brave-v$version-win32-x64.zip"
     },
-    "notes": "Brave is launched from its official Windows ZIP with a persisted profile. Brave-specific P3A, Stats Ping, Web Discovery, Rewards, Wallet, and AI controls remain vendor-specific and require runtime policy validation."
+    "notes": "Brave is launched from its official Windows ZIP with a persisted profile. Post-install profile initialization disables P3A, usage pings, sponsored ads, Leo AI features, and promotional New Tab cards without registry policies."
 }
