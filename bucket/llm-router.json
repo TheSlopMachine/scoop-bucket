@@ -1,20 +1,20 @@
 {
-    "version": "0.6.2",
+    "version": "0.6.3",
     "description": "Zero-bloat, self-contained OpenAI-compatible LLM routing gateway",
     "homepage": "https://github.com/TheSlopMachine/llm-router",
     "license": "MIT",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/TheSlopMachine/llm-router/releases/download/v0.6.2/llm-router_windows_amd64.zip",
-            "hash": "941da0640eedad149c9f05a3433fdeec67786cf31e0a0faffe139cce0c2bb76f"
+            "url": "https://github.com/TheSlopMachine/llm-router/releases/download/v0.6.3/llm-router_windows_amd64.zip",
+            "hash": "b9af7b149514e5ffa5dd80ae6efa23fd8bd55672ef0c05a48d81c770e7211923"
         },
         "32bit": {
-            "url": "https://github.com/TheSlopMachine/llm-router/releases/download/v0.6.2/llm-router_windows_386.zip",
-            "hash": "4eed2ef25ea30eaa7fbd964dd4e32d1ddda16e4fbdcc6b34aaac0eab26b44f27"
+            "url": "https://github.com/TheSlopMachine/llm-router/releases/download/v0.6.3/llm-router_windows_386.zip",
+            "hash": "0f0a8e2ec89ef48c17daea9897510731a2bd2db25422fcdfa47d29b41a4b802a"
         },
         "arm64": {
-            "url": "https://github.com/TheSlopMachine/llm-router/releases/download/v0.6.2/llm-router_windows_arm64.zip",
-            "hash": "4bad28f1276f76f0f40e37f3aa6e2e7274fb85514b064c9d5f69295839798cb5"
+            "url": "https://github.com/TheSlopMachine/llm-router/releases/download/v0.6.3/llm-router_windows_arm64.zip",
+            "hash": "a2e0083bdb4819f3dc08c7febc380f01f339d8793684c5fa0e569def5b6d7ba9"
         }
     },
     "bin": "llm-router.exe",
