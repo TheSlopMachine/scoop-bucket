@@ -23,6 +23,11 @@
     "post_install": [
         "$profileHelper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'Initialize-ChromiumProfile.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
         "if ($profileHelper) { & $profileHelper.FullName -ProfilePath (Join-Path $persist_dir 'profile') -Vivaldi }",
+        "$profileCleaner = Get-ChildItem -LiteralPath $bucketsdir -Filter 'Clean-VivaldiProfile.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
+        "$cultureBookmarks = Get-ChildItem -LiteralPath $dir -Recurse -Filter ((Get-Culture).Name + '.json') -ErrorAction SilentlyContinue | Where-Object { $_.FullName -like '*resources\\vivaldi\\default-bookmarks\\*' } | Select-Object -First 1",
+        "$fallbackBookmarks = Get-ChildItem -LiteralPath $dir -Recurse -Filter 'en-US.json' -ErrorAction SilentlyContinue | Where-Object { $_.FullName -like '*resources\\vivaldi\\default-bookmarks\\*' } | Select-Object -First 1",
+        "$bookmarkSource = if ($cultureBookmarks) { $cultureBookmarks } else { $fallbackBookmarks }",
+        "if ($profileCleaner -and $bookmarkSource) { & $profileCleaner.FullName -ProfilePath (Join-Path $persist_dir 'profile') -DefaultBookmarksPath $bookmarkSource.FullName }",
         "$target = Get-ChildItem -LiteralPath $dir -Recurse -Filter 'vivaldi.exe' | Select-Object -First 1",
         "$helper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'New-AppUserModelShortcut.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
         "if ($target -and $helper) { & $helper.FullName -DiscoverAppUserModelId -TargetPath $target.FullName -ShortcutPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Vivaldi.lnk') -Arguments ('--user-data-dir=\"' + (Join-Path $persist_dir 'profile') + '\" --no-first-run --no-default-browser-check --disable-background-networking --disable-component-update --disable-domain-reliability --disable-default-apps') -WorkingDirectory $target.DirectoryName }"
