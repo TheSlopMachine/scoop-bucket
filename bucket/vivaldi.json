@@ -1,0 +1,35 @@
+{
+    "version": "8.2.4133.96",
+    "description": "Customizable Chromium-based web browser with portable profile persistence",
+    "homepage": "https://vivaldi.com/",
+    "license": "Freeware",
+    "url": "https://downloads.vivaldi.com/stable/Vivaldi.8.2.4133.96.x64.exe#/dl.7z",
+    "hash": "cd3374dbbffe20ccc8dd1f621c171831ae4e79548af1d41db4dadadf3decb034",
+    "installer": {
+        "script": [
+            "Expand-7zipArchive \"$dir\\vivaldi.7z\" -DestinationPath \"$dir\\Application\" -ExtractDir 'Vivaldi-bin' -Removal",
+            "Remove-Item \"$dir\\Application\\update_notifier.exe\" -ErrorAction SilentlyContinue",
+            "Set-Content \"$dir\\Application\\stp.viv\" '// Vivaldi Standalone' -Encoding ASCII"
+        ]
+    },
+    "persist": "profile",
+    "bin": [
+        [
+            "Application\\vivaldi.exe",
+            "vivaldi",
+            "--user-data-dir=\"$persist_dir\\profile\" --no-first-run --no-default-browser-check"
+        ]
+    ],
+    "post_install": [
+        "$target = Get-ChildItem -LiteralPath $dir -Recurse -Filter 'vivaldi.exe' | Select-Object -First 1",
+        "$helper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'New-AppUserModelShortcut.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
+        "if ($target -and $helper) { & $helper.FullName -DiscoverAppUserModelId -TargetPath $target.FullName -ShortcutPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Vivaldi.lnk') -Arguments ('--user-data-dir=\"' + (Join-Path $persist_dir 'profile') + '\" --no-first-run --no-default-browser-check') -WorkingDirectory $target.DirectoryName }"
+    ],
+    "checkver": {
+        "url": "https://vivaldi.com/download/?platform=windows",
+        "regex": "Vivaldi\\.(\\d+(?:\\.\\d+){3})\\.x64\\.exe"
+    },
+    "autoupdate": {
+        "url": "https://downloads.vivaldi.com/stable/Vivaldi.$version.x64.exe#/dl.7z"
+    }
+}

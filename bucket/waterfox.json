@@ -1,0 +1,31 @@
+{
+    "version": "6.7.7",
+    "description": "Privacy-focused Firefox-based web browser with portable profile persistence",
+    "homepage": "https://www.waterfox.com/",
+    "license": "MPL-2.0",
+    "url": "https://cdn.waterfox.com/waterfox/releases/6.7.7/WINNT_x86_64/Waterfox%20Setup%206.7.7.exe#/dl.7z",
+    "hash": "5fb1d40603908d6125fae69a4fa9dac4ba999b90c766ca9a812238f8fe37ec42",
+    "extract_dir": "core",
+    "persist": "profile",
+    "bin": [
+        [
+            "waterfox.exe",
+            "waterfox",
+            "-profile \"$persist_dir\\profile\""
+        ]
+    ],
+    "post_install": [
+        "$target = Get-ChildItem -LiteralPath $dir -Recurse -Filter 'waterfox.exe' | Select-Object -First 1",
+        "if ($target) { $policy = @{ policies = @{ DisableAppUpdate = $true; DisableTelemetry = $true; DisableFirefoxStudies = $true; DisablePocket = $true; DisableFirefoxScreenshots = $true; DisableFeedbackCommands = $true; DisableAccounts = $true; Preferences = @{ 'browser.shell.checkDefaultBrowser' = @{ Value = $false; Status = 'locked' }; 'browser.newtabpage.activity-stream.showSponsoredTopSites' = @{ Value = $false; Status = 'locked' }; 'browser.newtabpage.activity-stream.showSponsored' = @{ Value = $false; Status = 'locked' } } } }; $policyDir = Join-Path $target.DirectoryName 'distribution'; New-Item -ItemType Directory -Force -Path $policyDir | Out-Null; $policy | ConvertTo-Json -Depth 8 | Set-Content (Join-Path $policyDir 'policies.json') -Encoding utf8 }",
+        "$helper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'New-AppUserModelShortcut.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
+        "if ($target -and $helper) { & $helper.FullName -DiscoverAppUserModelId -TargetPath $target.FullName -ShortcutPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Waterfox.lnk') -Arguments ('-profile \"' + (Join-Path $persist_dir 'profile') + '\"') -WorkingDirectory $target.DirectoryName }",
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Waterfox Profile Manager.lnk') -Force -ErrorAction SilentlyContinue",
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Waterfox Private Browsing.lnk') -Force -ErrorAction SilentlyContinue"
+    ],
+    "checkver": {
+        "github": "https://github.com/BrowserWorks/Waterfox"
+    },
+    "autoupdate": {
+        "url": "https://cdn.waterfox.com/waterfox/releases/$version/WINNT_x86_64/Waterfox%20Setup%20$version.exe#/dl.7z"
+    }
+}

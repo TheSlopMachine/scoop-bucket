@@ -1,0 +1,31 @@
+{
+    "version": "1732282",
+    "description": "Open-source Chromium browser snapshot with portable profile persistence",
+    "homepage": "https://www.chromium.org/",
+    "license": "BSD-3-Clause",
+    "url": "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win_x64/1732282/chrome-win.zip",
+    "hash": "81dec2bd585ffd02081a95f80558214213579f5ab1ae497cb851dd708e4bcab0",
+    "extract_dir": "chrome-win",
+    "persist": "profile",
+    "bin": [
+        [
+            "chrome.exe",
+            "chromium",
+            "--user-data-dir=\"$persist_dir\\profile\" --no-first-run --no-default-browser-check --disable-background-mode --disable-background-networking --disable-component-update --disable-sync"
+        ]
+    ],
+    "post_install": [
+        "$target = Get-ChildItem -LiteralPath $dir -Recurse -Filter 'chrome.exe' | Select-Object -First 1",
+        "$helper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'New-AppUserModelShortcut.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
+        "if ($target -and $helper) { & $helper.FullName -DiscoverAppUserModelId -TargetPath $target.FullName -ShortcutPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Chromium.lnk') -Arguments ('--user-data-dir=\"' + (Join-Path $persist_dir 'profile') + '\" --no-first-run --no-default-browser-check --disable-background-mode --disable-background-networking --disable-component-update --disable-sync') -WorkingDirectory $target.DirectoryName }",
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Search with Chromium.lnk') -Force -ErrorAction SilentlyContinue"
+    ],
+    "checkver": {
+        "url": "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win_x64/LAST_CHANGE",
+        "regex": "(?m)^\\s*(\\d+)\\s*$"
+    },
+    "autoupdate": {
+        "url": "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win_x64/$version/chrome-win.zip",
+        "extract_dir": "chrome-win"
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "version": "1.98.63",
+    "description": "Privacy-focused Chromium browser with Brave services reduced and profile persistence",
+    "homepage": "https://brave.com/",
+    "license": "MPL-2.0",
+    "url": "https://github.com/brave/brave-browser/releases/download/v1.98.63/brave-v1.98.63-win32-x64.zip",
+    "hash": "403f330d018f86fddbcedb95ea1f8b9b5e9a6198d93d306a4d4cee776f49396a",
+    "persist": "profile",
+    "bin": [
+        [
+            "brave.exe",
+            "brave",
+            "--user-data-dir=\"$persist_dir\\profile\" --no-first-run --no-default-browser-check --disable-background-mode --disable-background-networking --disable-component-update --disable-sync"
+        ]
+    ],
+    "post_install": [
+        "$target = Get-ChildItem -LiteralPath $dir -Recurse -Filter 'brave.exe' | Select-Object -First 1",
+        "$helper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'New-AppUserModelShortcut.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
+        "if ($target -and $helper) { & $helper.FullName -DiscoverAppUserModelId -TargetPath $target.FullName -ShortcutPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Brave.lnk') -Arguments ('--user-data-dir=\"' + (Join-Path $persist_dir 'profile') + '\" --no-first-run --no-default-browser-check --disable-background-mode --disable-background-networking --disable-component-update --disable-sync') -WorkingDirectory $target.DirectoryName }"
+    ],
+    "checkver": {
+        "github": "https://github.com/brave/brave-browser"
+    },
+    "autoupdate": {
+        "url": "https://github.com/brave/brave-browser/releases/download/v$version/brave-v$version-win32-x64.zip"
+    },
+    "notes": "Brave is launched from its official Windows ZIP with a persisted profile. Brave-specific P3A, Stats Ping, Web Discovery, Rewards, Wallet, and AI controls remain vendor-specific and require runtime policy validation."
+}

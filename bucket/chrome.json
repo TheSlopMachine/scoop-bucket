@@ -1,0 +1,32 @@
+{
+    "version": "156.0.8078.80",
+    "description": "Google Chrome browser distributed as a portable Chrome for Testing archive",
+    "homepage": "https://www.google.com/chrome/",
+    "license": "Freeware",
+    "url": "https://storage.googleapis.com/chrome-for-testing-public/156.0.8078.80/win64/chrome-win64.zip",
+    "hash": "16edb57d6107bf1c48a7c149b8d78b155fe614410093796dd72441fd6640540f",
+    "extract_dir": "chrome-win64",
+    "persist": "profile",
+    "bin": [
+        [
+            "chrome.exe",
+            "chrome",
+            "--user-data-dir=\"$persist_dir\\profile\" --no-first-run --no-default-browser-check --disable-background-mode --disable-background-networking --disable-component-update --disable-sync"
+        ]
+    ],
+    "post_install": [
+        "$target = Get-ChildItem -LiteralPath $dir -Recurse -Filter 'chrome.exe' | Select-Object -First 1",
+        "$helper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'New-AppUserModelShortcut.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
+        "if ($target -and $helper) { & $helper.FullName -DiscoverAppUserModelId -TargetPath $target.FullName -ShortcutPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Chrome.lnk') -Arguments ('--user-data-dir=\"' + (Join-Path $persist_dir 'profile') + '\" --no-first-run --no-default-browser-check --disable-background-mode --disable-background-networking --disable-component-update --disable-sync') -WorkingDirectory $target.DirectoryName }",
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Search with Chromium.lnk') -Force -ErrorAction SilentlyContinue"
+    ],
+    "checkver": {
+        "url": "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json",
+        "jsonpath": "$.channels.Stable.version"
+    },
+    "autoupdate": {
+        "url": "https://storage.googleapis.com/chrome-for-testing-public/$version/win64/chrome-win64.zip",
+        "extract_dir": "chrome-win64"
+    },
+    "notes": "This uses Google's Chrome for Testing ZIP, which has no Google Update service. It is a portable/testing distribution rather than the regular Chrome installer."
+}
