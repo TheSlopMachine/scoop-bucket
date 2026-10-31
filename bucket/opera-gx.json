@@ -24,7 +24,7 @@
     "persist": "profile",
     "bin": [
         [
-            "launcher.exe",
+            "opera.exe",
             "opera-gx",
             "--user-data-dir=\"$persist_dir\\profile\" --no-first-run --no-default-browser-check --disable-background-networking --disable-component-update --disable-domain-reliability --disable-default-apps"
         ]
