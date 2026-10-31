@@ -34,8 +34,20 @@ foreach ($key in 'omnibox_everywhere.show_ai_mode','omnibox_everywhere.fre_dismi
 if ($Vivaldi) {
     if (-not $preferences.ContainsKey('vivaldi')) { $preferences['vivaldi'] = @{} }
     $preferences['vivaldi']['context_dialogs'] = @{ seen = @{ EnableCalendarContextDialog = $true; EnableMailContextDialog = $true; EnableSyncContextDialog = $true } }
-    $preferences['vivaldi']['startup'] = @{ has_seen_welcome_page = $true }
-    $preferences['vivaldi']['system'] = @{ show_exit_confirmation_dialog = $false }
+    if (-not $preferences['vivaldi'].ContainsKey('startup')) { $preferences['vivaldi']['startup'] = @{} }
+    $preferences['vivaldi']['startup']['has_seen_welcome_page'] = $true
+    $preferences['vivaldi']['startup']['check_is_default'] = $false
+    if (-not $preferences['vivaldi'].ContainsKey('dashboard')) { $preferences['vivaldi']['dashboard'] = @{} }
+    $preferences['vivaldi']['dashboard']['widgets'] = @()
+    if (-not $preferences['vivaldi'].ContainsKey('system')) { $preferences['vivaldi']['system'] = @{} }
+    $preferences['vivaldi']['system']['show_exit_confirmation_dialog'] = $false
+
+    $bookmarksPath = Join-Path $ProfilePath 'Default\Bookmarks'
+    if (-not (Test-Path -LiteralPath $bookmarksPath -PathType Leaf)) {
+        $bookmarkFolder = { param($id, $name) @{ children = @(); date_added = '0'; date_modified = '0'; guid = $id; id = $id; name = $name; type = 'folder' } }
+        $bookmarks = @{ checksum = ''; roots = @{ bookmark_bar = & $bookmarkFolder 'bookmark_bar' 'Bookmarks bar'; other = & $bookmarkFolder 'other' 'Other bookmarks'; synced = & $bookmarkFolder 'synced' 'Mobile bookmarks'; trash = & $bookmarkFolder 'trash' 'Trash' }; version = 1 }
+        $bookmarks | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $bookmarksPath -Encoding utf8
+    }
 }
 
 if ($Brave) {
