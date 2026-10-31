@@ -1,10 +1,10 @@
 {
-    "version": "1732282",
+    "version": "1732309",
     "description": "Open-source Chromium browser snapshot with portable profile persistence",
     "homepage": "https://www.chromium.org/",
     "license": "BSD-3-Clause",
-    "url": "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win_x64/1732282/chrome-win.zip",
-    "hash": "81dec2bd585ffd02081a95f80558214213579f5ab1ae497cb851dd708e4bcab0",
+    "url": "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win_x64/1732309/chrome-win.zip",
+    "hash": "9d3cc34f62e53b4d3a9e20940a6ec310fea0aa1c6f240c3c8047ea2fb6f40f5b",
     "extract_dir": "chrome-win",
     "persist": "profile",
     "bin": [
@@ -22,9 +22,7 @@
         "if ($target -and $helper) { & $helper.FullName -DiscoverAppUserModelId -TargetPath $target.FullName -ShortcutPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Chromium.lnk') -Arguments ('--user-data-dir=\"' + (Join-Path $persist_dir 'profile') + '\" --no-first-run --no-default-browser-check --disable-background-mode --disable-background-networking --disable-component-update --disable-domain-reliability --disable-default-apps --disable-sync') -WorkingDirectory $target.DirectoryName }",
         "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Search with Chromium.lnk') -Force -ErrorAction SilentlyContinue"
     ],
-    "post_uninstall": [
-        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Chromium.lnk') -Force -ErrorAction SilentlyContinue"
-    ],
+    "post_uninstall": "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Chromium.lnk') -Force -ErrorAction SilentlyContinue",
     "checkver": {
         "url": "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win_x64/LAST_CHANGE",
         "regex": "(?m)^\\s*(\\d+)\\s*$"
