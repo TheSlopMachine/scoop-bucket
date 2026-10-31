@@ -25,6 +25,9 @@
         "$helper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'New-AppUserModelShortcut.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
         "if ($target -and $helper) { & $helper.FullName -DiscoverAppUserModelId -TargetPath $target.FullName -ShortcutPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Vivaldi.lnk') -Arguments ('--user-data-dir=\"' + (Join-Path $persist_dir 'profile') + '\" --no-first-run --no-default-browser-check') -WorkingDirectory $target.DirectoryName }"
     ],
+    "post_uninstall": [
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Vivaldi.lnk') -Force -ErrorAction SilentlyContinue"
+    ],
     "checkver": {
         "url": "https://vivaldi.com/download/?platform=windows",
         "regex": "Vivaldi\\.(\\d+(?:\\.\\d+){3})\\.x64\\.exe"

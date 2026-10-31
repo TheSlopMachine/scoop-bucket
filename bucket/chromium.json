@@ -20,6 +20,9 @@
         "if ($target -and $helper) { & $helper.FullName -DiscoverAppUserModelId -TargetPath $target.FullName -ShortcutPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Chromium.lnk') -Arguments ('--user-data-dir=\"' + (Join-Path $persist_dir 'profile') + '\" --no-first-run --no-default-browser-check --disable-background-mode --disable-background-networking --disable-component-update --disable-sync') -WorkingDirectory $target.DirectoryName }",
         "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Search with Chromium.lnk') -Force -ErrorAction SilentlyContinue"
     ],
+    "post_uninstall": [
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Chromium.lnk') -Force -ErrorAction SilentlyContinue"
+    ],
     "checkver": {
         "url": "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win_x64/LAST_CHANGE",
         "regex": "(?m)^\\s*(\\d+)\\s*$"

@@ -22,6 +22,9 @@
         "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Waterfox Profile Manager.lnk') -Force -ErrorAction SilentlyContinue",
         "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Waterfox Private Browsing.lnk') -Force -ErrorAction SilentlyContinue"
     ],
+    "post_uninstall": [
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Waterfox.lnk') -Force -ErrorAction SilentlyContinue"
+    ],
     "checkver": {
         "github": "https://github.com/BrowserWorks/Waterfox"
     },

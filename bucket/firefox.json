@@ -25,6 +25,9 @@
         "if ($target -and $helper) { & $helper.FullName -DiscoverAppUserModelId -TargetPath $target.FullName -ShortcutPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Firefox.lnk') -Arguments ('-profile \"' + (Join-Path $persist_dir 'profile') + '\"') -WorkingDirectory $target.DirectoryName }",
         "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Firefox Private Browsing.lnk') -Force -ErrorAction SilentlyContinue"
     ],
+    "post_uninstall": [
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Firefox.lnk') -Force -ErrorAction SilentlyContinue"
+    ],
     "checkver": {
         "url": "https://product-details.mozilla.org/1.0/firefox_versions.json",
         "jsonpath": "$.LATEST_FIREFOX_VERSION"

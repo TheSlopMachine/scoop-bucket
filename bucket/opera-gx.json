@@ -33,6 +33,9 @@
         "$target = Get-ChildItem -LiteralPath $dir -Recurse -Filter 'opera.exe' | Select-Object -First 1",
         "if ($target) { $folder = Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps'; New-Item -ItemType Directory -Force -Path $folder | Out-Null; $link = (New-Object -ComObject WScript.Shell).CreateShortcut((Join-Path $folder 'Opera GX.lnk')); $link.TargetPath = $target.FullName; $link.Arguments = '--user-data-dir=\"' + (Join-Path $persist_dir 'profile') + '\" --no-first-run --no-default-browser-check'; $link.WorkingDirectory = $target.DirectoryName; $link.IconLocation = $target.FullName + ',0'; $link.Save() }"
     ],
+    "post_uninstall": [
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Opera GX.lnk') -Force -ErrorAction SilentlyContinue"
+    ],
     "checkver": {
         "script": [
             "$path_regex = '^(?!\\.)[\\d.]+/$'",
