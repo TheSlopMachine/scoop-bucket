@@ -1,0 +1,43 @@
+{
+    "version": "138.0.7204.303",
+    "description": "Fast Chromium fork compiled with AVX support and portable profile persistence",
+    "homepage": "https://thorium.rocks/",
+    "license": "BSD-3-Clause",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/Alex313031/Thorium-Win/releases/download/M138.0.7204.303/thorium_AVX_138.0.7204.303.zip",
+            "hash": "170efa41ec9da86a6fa72fe2432a91e5310ba8af3c7c5ea3b5b9c6c1936ac32a"
+        }
+    },
+    "persist": "profile",
+    "bin": [
+        [
+            "BIN\\thorium.exe",
+            "thorium-avx",
+            "--user-data-dir=\"$persist_dir\\profile\" --no-first-run --no-default-browser-check --disable-background-mode --disable-background-networking --disable-component-update --disable-domain-reliability --disable-default-apps"
+        ]
+    ],
+    "post_install": [
+        "$profileHelper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'Initialize-ChromiumProfile.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
+        "if ($profileHelper) { & $profileHelper.FullName -ProfilePath (Join-Path $persist_dir 'profile') }",
+        "$target = Get-ChildItem -LiteralPath $dir -Recurse -Filter 'thorium.exe' | Select-Object -First 1",
+        "$helper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'New-AppUserModelShortcut.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
+        "if ($target -and $helper) { & $helper.FullName -DiscoverAppUserModelId -TargetPath $target.FullName -ShortcutPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Thorium AVX.lnk') -Arguments ('--user-data-dir=\"' + (Join-Path $persist_dir 'profile') + '\" --no-first-run --no-default-browser-check --disable-background-mode --disable-background-networking --disable-component-update --disable-domain-reliability --disable-default-apps') -WorkingDirectory $target.DirectoryName }",
+        "$profileHelper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'Initialize-ChromiumProfile.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
+        "if ($profileHelper) { & $profileHelper.FullName -ProfilePath (Join-Path $persist_dir 'profile') -Enforce }"
+    ],
+    "post_uninstall": "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Thorium AVX.lnk') -Force -ErrorAction SilentlyContinue",
+    "checkver": {
+        "url": "https://api.github.com/repos/Alex313031/Thorium-Win/releases",
+        "jsonpath": "$[?(@.assets[0])].tag_name",
+        "regex": "M((?:\\d+\\.){3}\\d+)"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/Alex313031/Thorium-Win/releases/download/M$version/thorium_AVX_$version.zip"
+            }
+        }
+    },
+    "notes": "Thorium AVX is launched with a profile under Scoop persist. Compiled with AVX support (requires an AVX-capable CPU). Post-install profile initialization reduces background telemetry and notification prompts without registry policies."
+}

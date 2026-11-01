@@ -1,0 +1,57 @@
+{
+    "version": "1.24b",
+    "description": "Privacy-focused Firefox-based web browser with vertical tabs and portable profile persistence",
+    "homepage": "https://www.zen-browser.app/",
+    "license": "MPL-2.0",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/zen-browser/desktop/releases/download/1.24b/zen.installer.exe#/dl.7z",
+            "hash": "2d55965f1952f2e5489dfaf954d613ebbf6361c5ca2bcad95ab8d3c0a481d6a4"
+        },
+        "arm64": {
+            "url": "https://github.com/zen-browser/desktop/releases/download/1.24b/zen.installer-arm64.exe#/dl.7z",
+            "hash": "1b88a99ae85dec5adc8cbc013c447e77d0bf89d9c427a63db3fedd58b111e967"
+        }
+    },
+    "extract_dir": "core",
+    "persist": "profile",
+    "bin": [
+        [
+            "zen.exe",
+            "zen",
+            "-profile \"$persist_dir\\profile\""
+        ]
+    ],
+    "post_install": [
+        "$target = Get-ChildItem -LiteralPath $dir -Recurse -Filter 'zen.exe' | Select-Object -First 1",
+        "$profileHelper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'Initialize-FirefoxProfile.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
+        "if ($target -and $profileHelper) { & $profileHelper.FullName -ProfilePath (Join-Path $persist_dir 'profile') -AppDir $target.DirectoryName }",
+        "$helper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'New-AppUserModelShortcut.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
+        "if ($target -and $helper) { & $helper.FullName -DiscoverAppUserModelId -TargetPath $target.FullName -ShortcutPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Zen Browser.lnk') -Arguments ('-profile \"' + (Join-Path $persist_dir 'profile') + '\"') -WorkingDirectory $target.DirectoryName }",
+        "if ($profileHelper) { & $profileHelper.FullName -ProfilePath (Join-Path $persist_dir 'profile') -CleanShortcuts }"
+    ],
+    "post_uninstall": [
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Zen Browser.lnk') -Force -ErrorAction SilentlyContinue",
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Zen.lnk') -Force -ErrorAction SilentlyContinue",
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Zen Browser.lnk') -Force -ErrorAction SilentlyContinue",
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Zen Private Browsing.lnk') -Force -ErrorAction SilentlyContinue",
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Zen Browser Private Browsing.lnk') -Force -ErrorAction SilentlyContinue",
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Zen Profile Manager.lnk') -Force -ErrorAction SilentlyContinue",
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Zen Browser Profile Manager.lnk') -Force -ErrorAction SilentlyContinue"
+    ],
+    "checkver": {
+        "url": "https://github.com/zen-browser/desktop/tags",
+        "regex": "releases/tag/([ab\\d.-]+)"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/zen-browser/desktop/releases/download/$version/zen.installer.exe#/dl.7z"
+            },
+            "arm64": {
+                "url": "https://github.com/zen-browser/desktop/releases/download/$version/zen.installer-arm64.exe#/dl.7z"
+            }
+        }
+    },
+    "notes": "Zen Browser is launched with a profile under Scoop persist. Enterprise policies disable telemetry, studies, promotions, feedback, account prompts, and application updates."
+}

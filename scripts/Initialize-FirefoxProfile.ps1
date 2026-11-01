@@ -142,10 +142,18 @@ foreach ($folder in $startFolders) {
     $shortcuts = @(
         (Join-Path $folder 'Firefox Private Browsing.lnk'),
         (Join-Path $folder 'Waterfox Private Browsing.lnk'),
+        (Join-Path $folder 'Zen Private Browsing.lnk'),
+        (Join-Path $folder 'Zen Browser Private Browsing.lnk'),
         (Join-Path $folder 'Firefox.lnk'),
         (Join-Path $folder 'Waterfox.lnk'),
+        (Join-Path $folder 'Zen.lnk'),
+        (Join-Path $folder 'Zen Browser.lnk'),
         (Join-Path $folder 'Scoop Apps\Waterfox Profile Manager.lnk'),
-        (Join-Path $folder 'Waterfox Profile Manager.lnk')
+        (Join-Path $folder 'Waterfox Profile Manager.lnk'),
+        (Join-Path $folder 'Scoop Apps\Zen Profile Manager.lnk'),
+        (Join-Path $folder 'Scoop Apps\Zen Browser Profile Manager.lnk'),
+        (Join-Path $folder 'Zen Profile Manager.lnk'),
+        (Join-Path $folder 'Zen Browser Profile Manager.lnk')
     )
     foreach ($sc in $shortcuts) {
         Remove-Item -LiteralPath $sc -Force -ErrorAction SilentlyContinue

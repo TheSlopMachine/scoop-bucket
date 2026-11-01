@@ -26,8 +26,11 @@ scoop install <app>
 | `opera-gx` | Opera GX gaming browser with portable profile persistence | [Opera GX](https://www.opera.com/gx) |
 | `paexec` | PsExec-compatible remote program execution utility (freely redistributable) | [poweradminllc/PAExec](https://github.com/poweradminllc/PAExec) |
 | `pineconemc` | Prism Launcher fork with Ely.by support | [ElyPrismLauncher/Launcher](https://github.com/ElyPrismLauncher/Launcher) |
+| `thorium` | Fast Chromium fork with portable profile persistence | [Alex313031/Thorium-Win](https://github.com/Alex313031/Thorium-Win) |
+| `thorium-avx` | Fast Chromium fork compiled with AVX support and portable profile persistence | [Alex313031/Thorium-Win](https://github.com/Alex313031/Thorium-Win) |
 | `vivaldi` | Customizable Chromium-based web browser with portable profile persistence | [Vivaldi](https://vivaldi.com/) |
 | `waterfox` | Privacy-focused Firefox-based browser with portable profile persistence | [BrowserWorks/Waterfox](https://github.com/BrowserWorks/Waterfox) |
 | `workshopdl` | Standalone Steam Workshop downloader GUI (1000+ games, collections) | [imwaitingnow/WorkshopDL](https://github.com/imwaitingnow/WorkshopDL) |
+| `zen-browser` | Privacy-focused Firefox-based web browser with vertical tabs and portable profile persistence | [zen-browser/desktop](https://github.com/zen-browser/desktop) |
 
 Apps update automatically when their upstream projects publish new releases.
