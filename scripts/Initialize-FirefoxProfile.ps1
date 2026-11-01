@@ -148,7 +148,6 @@ foreach ($folder in $startFolders) {
         (Join-Path $folder 'Waterfox.lnk'),
         (Join-Path $folder 'Zen.lnk'),
         (Join-Path $folder 'Zen Browser.lnk'),
-        (Join-Path $folder 'Scoop Apps\Zen Browser.lnk'),
         (Join-Path $folder 'Scoop Apps\Waterfox Profile Manager.lnk'),
         (Join-Path $folder 'Waterfox Profile Manager.lnk'),
         (Join-Path $folder 'Scoop Apps\Zen Profile Manager.lnk'),
