@@ -16,19 +16,23 @@
     ],
     "post_install": [
         "$target = Get-ChildItem -LiteralPath $dir -Recurse -Filter 'waterfox.exe' | Select-Object -First 1",
-        "if ($target) { $policy = @{ policies = @{ DisableAppUpdate = $true; BackgroundAppUpdate = $false; DisableDefaultBrowserAgent = $true; DisableTelemetry = $true; DisableFirefoxStudies = $true; DisablePocket = $true; DisableFirefoxScreenshots = $true; DisableFeedbackCommands = $true; DisableAccounts = $true; DontCheckDefaultBrowser = $true; OverrideFirstRunPage = ''; OverridePostUpdatePage = ''; FirefoxHome = @{ Search = $true; TopSites = $true; SponsoredTopSites = $false; Highlights = $false; Pocket = $false; Stories = $false; SponsoredPocket = $false; SponsoredStories = $false; Snippets = $false; Locked = $true }; UserMessaging = @{ ExtensionRecommendations = $false; FeatureRecommendations = $false; UrlbarInterventions = $false; SkipOnboarding = $true; Locked = $true }; Preferences = @{ 'browser.shell.checkDefaultBrowser' = @{ Value = $false; Status = 'locked' }; 'browser.aboutwelcome.enabled' = @{ Value = $false; Status = 'locked' }; 'browser.newtabpage.activity-stream.widgets.weather.enabled' = @{ Value = $false; Status = 'locked' }; 'browser.newtabpage.activity-stream.showSponsoredTopSites' = @{ Value = $false; Status = 'locked' }; 'browser.newtabpage.activity-stream.showSponsored' = @{ Value = $false; Status = 'locked' } } } }; $policyDir = Join-Path $target.DirectoryName 'distribution'; New-Item -ItemType Directory -Force -Path $policyDir | Out-Null; $policy | ConvertTo-Json -Depth 8 | Set-Content (Join-Path $policyDir 'policies.json') -Encoding utf8 }",
+        "$profileHelper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'Initialize-FirefoxProfile.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
+        "if ($target -and $profileHelper) { & $profileHelper.FullName -ProfilePath (Join-Path $persist_dir 'profile') -AppDir $target.DirectoryName -Waterfox }",
         "$helper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'New-AppUserModelShortcut.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
         "if ($target -and $helper) { & $helper.FullName -DiscoverAppUserModelId -TargetPath $target.FullName -ShortcutPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Waterfox.lnk') -Arguments ('-profile \"' + (Join-Path $persist_dir 'profile') + '\"') -WorkingDirectory $target.DirectoryName }",
-        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Waterfox Profile Manager.lnk') -Force -ErrorAction SilentlyContinue",
-        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Waterfox Private Browsing.lnk') -Force -ErrorAction SilentlyContinue"
+        "if ($profileHelper) { & $profileHelper.FullName -ProfilePath (Join-Path $persist_dir 'profile') -Waterfox -CleanShortcuts }"
     ],
     "post_uninstall": [
-        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Waterfox.lnk') -Force -ErrorAction SilentlyContinue"
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Waterfox.lnk') -Force -ErrorAction SilentlyContinue",
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Waterfox Private Browsing.lnk') -Force -ErrorAction SilentlyContinue",
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Waterfox.lnk') -Force -ErrorAction SilentlyContinue",
+        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Waterfox Profile Manager.lnk') -Force -ErrorAction SilentlyContinue"
     ],
     "checkver": {
         "github": "https://github.com/BrowserWorks/Waterfox"
     },
     "autoupdate": {
         "url": "https://cdn.waterfox.com/waterfox/releases/$version/WINNT_x86_64/Waterfox%20Setup%20$version.exe#/dl.7z"
-    }
+    },
+    "notes": "Waterfox is launched with a profile under Scoop persist. Enterprise policies disable telemetry, studies, promotions, feedback, account prompts, and application updates."
 }
