@@ -1,12 +1,12 @@
 {
-    "version": "139.0.6053.22",
+    "version": "139.0.6053.38",
     "description": "Opera web browser with portable profile persistence and reduced promotional UI",
     "homepage": "https://www.opera.com/",
     "license": "Freeware",
     "architecture": {
         "64bit": {
-            "url": "https://get.geo.opera.com/pub/opera/desktop/139.0.6053.22/win/Opera_139.0.6053.22_Setup_x64.exe",
-            "hash": "83bffc49bf67669be3acee581b028661c9710f802b8f68ccfa4389c3c2ae482b"
+            "url": "https://get.geo.opera.com/pub/opera/desktop/139.0.6053.38/win/Opera_139.0.6053.38_Setup_x64.exe",
+            "hash": "febc5fc0fa0b3342e3bddf1460e9961b09f339f6a5992bc3995452e279e8e8cd"
         }
     },
     "installer": {
@@ -35,9 +35,7 @@
         "$target = Get-ChildItem -LiteralPath $dir -Recurse -Filter 'opera.exe' | Select-Object -First 1",
         "if ($target) { $folder = Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps'; New-Item -ItemType Directory -Force -Path $folder | Out-Null; $link = (New-Object -ComObject WScript.Shell).CreateShortcut((Join-Path $folder 'Opera.lnk')); $link.TargetPath = $target.FullName; $link.Arguments = '--user-data-dir=\"' + (Join-Path $persist_dir 'profile') + '\" --no-first-run --no-default-browser-check --disable-background-networking --disable-component-update --disable-domain-reliability --disable-default-apps'; $link.WorkingDirectory = $target.DirectoryName; $link.IconLocation = $target.FullName + ',0'; $link.Save() }"
     ],
-    "post_uninstall": [
-        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Opera.lnk') -Force -ErrorAction SilentlyContinue"
-    ],
+    "post_uninstall": "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Opera.lnk') -Force -ErrorAction SilentlyContinue",
     "checkver": {
         "script": [
             "$path_regex = '^(?!\\.)[\\d.]+/$'",
