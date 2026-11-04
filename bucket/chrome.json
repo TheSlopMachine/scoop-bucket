@@ -1,10 +1,10 @@
 {
-    "version": "156.0.8078.80",
+    "version": "157.0.8103.38",
     "description": "Google Chrome browser distributed as a portable Chrome for Testing archive",
     "homepage": "https://www.google.com/chrome/",
     "license": "Freeware",
-    "url": "https://storage.googleapis.com/chrome-for-testing-public/156.0.8078.80/win64/chrome-win64.zip",
-    "hash": "16edb57d6107bf1c48a7c149b8d78b155fe614410093796dd72441fd6640540f",
+    "url": "https://storage.googleapis.com/chrome-for-testing-public/157.0.8103.38/win64/chrome-win64.zip",
+    "hash": "ae0deef27d449e1d7529df7705d609bab102de48464da13567ed3dd2ee1a0586",
     "extract_dir": "chrome-win64",
     "persist": "profile",
     "bin": [
@@ -24,9 +24,7 @@
         "if ($profileHelper) { & $profileHelper.FullName -ProfilePath (Join-Path $persist_dir 'profile') -Enforce }",
         "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Search with Chromium.lnk') -Force -ErrorAction SilentlyContinue"
     ],
-    "post_uninstall": [
-        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Chrome.lnk') -Force -ErrorAction SilentlyContinue"
-    ],
+    "post_uninstall": "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Chrome.lnk') -Force -ErrorAction SilentlyContinue",
     "checkver": {
         "url": "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json",
         "jsonpath": "$.channels.Stable.version"
