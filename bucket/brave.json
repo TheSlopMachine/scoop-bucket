@@ -1,10 +1,10 @@
 {
-    "version": "1.98.63",
+    "version": "1.99.55",
     "description": "Privacy-focused Chromium browser with Brave services reduced and profile persistence",
     "homepage": "https://brave.com/",
     "license": "MPL-2.0",
-    "url": "https://github.com/brave/brave-browser/releases/download/v1.98.63/brave-v1.98.63-win32-x64.zip",
-    "hash": "403f330d018f86fddbcedb95ea1f8b9b5e9a6198d93d306a4d4cee776f49396a",
+    "url": "https://github.com/brave/brave-browser/releases/download/v1.99.55/brave-v1.99.55-win32-x64.zip",
+    "hash": "ababc163488bfd58cab7ebe4a4057dd23227c81f5958f3a8597526a278fbae15",
     "persist": "profile",
     "bin": [
         [
@@ -20,9 +20,7 @@
         "$helper = Get-ChildItem -LiteralPath $bucketsdir -Filter 'New-AppUserModelShortcut.ps1' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1",
         "if ($target -and $helper) { & $helper.FullName -DiscoverAppUserModelId -TargetPath $target.FullName -ShortcutPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Brave.lnk') -Arguments ('--user-data-dir=\"' + (Join-Path $persist_dir 'profile') + '\" --no-first-run --no-default-browser-check --disable-background-mode --disable-background-networking --disable-component-update --disable-domain-reliability --disable-default-apps --disable-sync') -WorkingDirectory $target.DirectoryName }"
     ],
-    "post_uninstall": [
-        "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Brave.lnk') -Force -ErrorAction SilentlyContinue"
-    ],
+    "post_uninstall": "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('StartMenu')) 'Programs\\Scoop Apps\\Brave.lnk') -Force -ErrorAction SilentlyContinue",
     "checkver": {
         "github": "https://github.com/brave/brave-browser"
     },
