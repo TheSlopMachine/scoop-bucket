@@ -21,6 +21,7 @@ scoop install <app>
 | `fileassocmanager` | Native Windows tool to batch-set default apps for ~440 file formats (Windows 10/11) | [TheSlopMachine/FileAssocManager](https://github.com/TheSlopMachine/FileAssocManager) |
 | `firefox` | Privacy-focused web browser with portable profile persistence | [mozilla-firefox](https://www.mozilla.org/firefox/) |
 | `imageviewer` | Simple, cross-platform Qt image viewer inspired by GPicView | [AlienCowEatCake/ImageViewer](https://github.com/AlienCowEatCake/ImageViewer) |
+| `killerpdf` | Free and open-source PDF editor for Windows with a built-in PDF 2.0 engine | [SteveTheKiller/KillerPDF](https://github.com/SteveTheKiller/KillerPDF) |
 | `llm-router` | Zero-bloat, self-contained OpenAI-compatible LLM routing gateway | [TheSlopMachine/llm-router](https://github.com/TheSlopMachine/llm-router) |
 | `opera` | Opera web browser with portable profile persistence | [Opera](https://www.opera.com/) |
 | `opera-gx` | Opera GX gaming browser with portable profile persistence | [Opera GX](https://www.opera.com/gx) |
