@@ -1,10 +1,10 @@
 {
-    "version": "1739531",
+    "version": "1740078",
     "description": "Open-source Chromium browser snapshot with portable profile persistence",
     "homepage": "https://www.chromium.org/",
     "license": "BSD-3-Clause",
-    "url": "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win_x64/1739531/chrome-win.zip",
-    "hash": "cb1d7ccf352d816c5cb0452fde25796a6a2229a33888b078a1520b13c3c2f42a",
+    "url": "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win_x64/1740078/chrome-win.zip",
+    "hash": "670f99a99c3c7d0898f2530c460ffe40448f58474796cc145ca1db7095451465",
     "extract_dir": "chrome-win",
     "persist": "profile",
     "bin": [
