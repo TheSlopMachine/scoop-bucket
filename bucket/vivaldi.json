@@ -1,10 +1,10 @@
 {
-    "version": "8.3.4191.30",
+    "version": "8.3.4191.35",
     "description": "Customizable Chromium-based web browser with portable profile persistence",
     "homepage": "https://vivaldi.com/",
     "license": "Freeware",
-    "url": "https://downloads.vivaldi.com/stable/Vivaldi.8.3.4191.30.x64.exe#/dl.7z",
-    "hash": "40ddf5a0a73e93b79e2f741d7538bad497cee59be159bebfccb0a35fb0c9cf6a",
+    "url": "https://downloads.vivaldi.com/stable/Vivaldi.8.3.4191.35.x64.exe#/dl.7z",
+    "hash": "d9cd421314ff8fd0f5a8b2a7dbb6818ac1dfe26882426253b26b89f09a66afdc",
     "installer": {
         "script": [
             "Expand-7zipArchive \"$dir\\vivaldi.7z\" -DestinationPath \"$dir\\Application\" -ExtractDir 'Vivaldi-bin' -Removal",

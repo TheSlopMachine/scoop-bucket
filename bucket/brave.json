@@ -1,10 +1,10 @@
 {
-    "version": "1.99.55",
+    "version": "1.99.56",
     "description": "Privacy-focused Chromium browser with Brave services reduced and profile persistence",
     "homepage": "https://brave.com/",
     "license": "MPL-2.0",
-    "url": "https://github.com/brave/brave-browser/releases/download/v1.99.55/brave-v1.99.55-win32-x64.zip",
-    "hash": "ababc163488bfd58cab7ebe4a4057dd23227c81f5958f3a8597526a278fbae15",
+    "url": "https://github.com/brave/brave-browser/releases/download/v1.99.56/brave-v1.99.56-win32-x64.zip",
+    "hash": "1f72b0ac331de0f5b1d10a94a4d88ad19e8126e0ee066b71b38be3f485bf98a8",
     "persist": "profile",
     "bin": [
         [
