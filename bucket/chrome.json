@@ -1,10 +1,10 @@
 {
-    "version": "157.0.8103.50",
+    "version": "157.0.8103.78",
     "description": "Google Chrome browser distributed as a portable Chrome for Testing archive",
     "homepage": "https://www.google.com/chrome/",
     "license": "Freeware",
-    "url": "https://storage.googleapis.com/chrome-for-testing-public/157.0.8103.50/win64/chrome-win64.zip",
-    "hash": "36088dd9c76c992f6e745fc20f94aca873f69c3331ce25ea3df36835cc4af73f",
+    "url": "https://storage.googleapis.com/chrome-for-testing-public/157.0.8103.78/win64/chrome-win64.zip",
+    "hash": "5f6ec40206407112702e163bf694d07f9fdc8ccbd346c70ce61fa62f716493f9",
     "extract_dir": "chrome-win64",
     "persist": "profile",
     "bin": [
