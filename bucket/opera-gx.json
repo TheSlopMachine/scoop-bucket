@@ -1,12 +1,12 @@
 {
-    "version": "140.0.6074.48",
+    "version": "140.0.6074.73",
     "description": "Opera GX gaming web browser with portable profile persistence",
     "homepage": "https://www.opera.com/gx",
     "license": "Freeware",
     "architecture": {
         "64bit": {
-            "url": "https://get.opera.com/pub/opera_gx/140.0.6074.48/win/Opera_GX_140.0.6074.48_Setup_x64.exe",
-            "hash": "7b854acb0226992ad53a5f9c3787f330aa96b410624429a16b001524d892661b"
+            "url": "https://get.opera.com/pub/opera_gx/140.0.6074.73/win/Opera_GX_140.0.6074.73_Setup_x64.exe",
+            "hash": "8150e8100adf593d8aeea4d25234e01cc99fb35ac859cd78333f6dbb477ad242"
         }
     },
     "installer": {

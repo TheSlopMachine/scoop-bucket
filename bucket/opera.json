@@ -1,12 +1,12 @@
 {
-    "version": "140.0.6074.36",
+    "version": "141.0.6089.28",
     "description": "Opera web browser with portable profile persistence and reduced promotional UI",
     "homepage": "https://www.opera.com/",
     "license": "Freeware",
     "architecture": {
         "64bit": {
-            "url": "https://get.geo.opera.com/pub/opera/desktop/140.0.6074.36/win/Opera_140.0.6074.36_Setup_x64.exe",
-            "hash": "6f8d0340ebf5f494bf307399e70c8bf727a0e30c6421cc9d1b47bb5df9adc465"
+            "url": "https://get.geo.opera.com/pub/opera/desktop/141.0.6089.28/win/Opera_141.0.6089.28_Setup_x64.exe",
+            "hash": "8913c4d68c22c1d5344129b092d74196108158f639165f87d34e36b31bf4b849"
         }
     },
     "installer": {
