@@ -1,10 +1,10 @@
 {
-    "version": "1.9.6",
+    "version": "1.9.7",
     "description": "Free and open-source PDF editor for Windows with a built-in PDF 2.0 engine",
     "homepage": "https://github.com/SteveTheKiller/KillerPDF",
     "license": "GPL-3.0-only",
-    "url": "https://github.com/SteveTheKiller/KillerPDF/releases/download/v1.9.6/KillerPDF-Portable.exe",
-    "hash": "b7d2bde4f2757a6f588374e2088d5a0865f96fdcbabd2cf0f5c86eb3a190a0b9",
+    "url": "https://github.com/SteveTheKiller/KillerPDF/releases/download/v1.9.7/KillerPDF-Portable.exe",
+    "hash": "9368d44dcb87e6b37d176cbbcc8cd25c5c909eb654c570b319dfb51204f2493c",
     "pre_install": [
         "# Portable build keeps its data next to the exe; make sure the directory exists so Scoop can persist it",
         "New-Item \"$dir\\KillerPDF-Data\" -ItemType Directory -Force | Out-Null"
